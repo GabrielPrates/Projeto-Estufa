@@ -8,6 +8,7 @@ void setup() {
 //Método loop, executado enquanto o Arduino estiver ligado.
 void loop() {  
   if(estadoBotao == 1){
+    //oi
     digitalWrite(led, HIGH);
       
   }else{
