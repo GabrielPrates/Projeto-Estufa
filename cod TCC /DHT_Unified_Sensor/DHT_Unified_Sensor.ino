@@ -3,10 +3,11 @@
 #include "DHT_U.h"
 
 #define DHTPIN 2         
-
+int valor_analogico;
 //#define DHTTYPE         DHT11     // DHT 11 
 #define DHTTYPE           DHT22     // DHT 22 (AM2302)
 //#define DHTTYPE         DHT21     // DHT 21 (AM2301)
+#define pino_sinal_analogico A0
 
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
@@ -16,6 +17,7 @@ void setup() {
   Serial.begin(9600); 
   dht.begin();
   Serial.println("Sensor de umadade/temperatura Estufa");
+  pinMode(pino_sinal_analogico, INPUT);
   pinMode(8, OUTPUT);
   sensor_t sensor;
   dht.humidity().getSensor(&sensor);
@@ -34,7 +36,9 @@ void loop() {
   delay(delayMS);
   // Get temperature event and print its value.
   sensors_event_t event;
-  digitalWrite(8, LOW); 
+  //le o valor do sensor do solo
+  valor_analogico = analogRead(pino_sinal_analogico);
+  Serial.println(valor_analogico);
   dht.temperature().getEvent(&event);
   if (isnan(event.temperature)) {
     Serial.println("erro de leitura da temperatura!");
